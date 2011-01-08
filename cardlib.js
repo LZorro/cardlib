@@ -8,46 +8,40 @@
 	Card
 		an object that contains some properties
 		default properties: bool facedown, bool tapped
-		poker default properties: suit, rank
+		poker default properties: rank, suit
 		functions: flip, tap, onClick
 */
-function Card()
-{
-	// ---- properties
-	var facedown;		// boolean, whether or not the card is face down	
-	var tapped;			// boolean, whether or not the card is tapped (turned sideways)
+var Card = Klass.extend({
+	// init: creates a new poker Card
+	//		r: rank
+	//		s: suit
+	init: function(r, s)
+	{
+		this.facedown 	= true;
+		this.tapped	 	= false;
+		this.rank 		= r;
+		this.suit 		= s;
+	},
 	
-	// poker card properties
-	var suit, rank;
-	
-	// initialization
-	this.facedown = true;
-	this.tapped = false;
-	
-	// ---- functions
-	
-	// flip: turn the card face up or face down
-	function flip()
+	// flip: turn the card face-up or face-down
+	flip: function()
 	{
 		this.facedown = !this.facedown;
-	}
+	},
 	
 	// tap: turn the card sideways or not
-	function tap()
+	tap: function()
 	{
 		this.tapped = !this.tapped;
-	}
+	},
 	
-	// onClick: what happens to a card when it is clicked (overridable)
-	function onClick()
+	// onClick: what happens to a card when it is clicked
+	onClick: function()
 	{
-		// something goes here
-		
-		// test:
+		// testing by tapping the card
 		this.tap();
 	}
-	
-}
+});
 
 /* ********************
 	Deck
@@ -57,30 +51,36 @@ function Card()
 			create (default: a standard 52-card poker deck)
 			shuffle
 */
-function Deck()
-{
-	// ---- properties
-	var size;	// how many cards are in the deck
-	
-	// initialization
-	this.size = 0;		
-	
-	// ---- functions
-	
-	// create: create a Deck by reading from a directory
-	function create()
+var Deck = Klass.extend({
+	// init: creates a standard 52-card poker deck
+	init: function()
 	{
-		// default: poker deck
+		this.card = new Array(52);
+		for (i=1; i<14; i++) 
+		{
+			this.card[i-1] 		= new Card(i, "Clubs");
+			this.card[i-1+13] 	= new Card(i, "Diamonds");
+			this.card[i-1+26] 	= new Card(i, "Hearts");
+			this.card[i-1+39] 	= new Card(i, "Spades");
+		}
+	},
+	
+	// shuffle: randomizes the order of the cards in the deck
+	shuffle: function()
+	{
+		// TODO: elaborate randomization goes here
+		console.log("Deck is shuffled.");
+	},
+	
+	// draw: removes a card from the Deck and "moves" it to a new destination
+	draw: function()
+	{
+		return this.card.pop();
 		
-		// return a success value (or the Deck if sucessful, null otherwise)
-	}
-	
-	// shuffle: randomizes the order of the cards in the Deck
-	function shuffle()
-	{
-		// random shuffle code here
-	}
-}
+		// return a success value
+		//return true;
+	},
+});
 
 /* ********************
 	Stack
@@ -89,68 +89,94 @@ function Deck()
 		properties: top, bottom, cascade [horizontal, vertical, none], size
 		functions: add, draw(destination), onClick
 */
-function Stack()
-{
-	// ---- properties
-	var top; 		// pointer to the card that the user can typically access
-	var bottom; 	// pointer to the card at the bottom of the pile
-	var cascade;	// determines whether the user can see the cards underneat the top
-					// 		values: horizontal, vertical, none
-	var size;		// how many cards are in the stack
-	
-	// initialization
-	this.cascade = "none";
-	this.size = 0;
-	
-	// ---- functions
-	
-	// add: adds a Card into the Stack
-	//		usually by a set of rules (overridable)
-	function add()
+var Stack = Klass.extend({
+	// init: creates an empty stack
+	init: function()
 	{
-		// default: push the Card onto the top of the stack
+		this.cardList 	= new Array();
+		//this.top 		= this.cardlist[0];
+		//this.bottom 	= this.cardlist[0];
+		this.cascade 	= "none";
+	},
+	
+	// add: adds a card to the Stack
+	//		addCard: the card attempting to be added to the Stack
+	add: function(addCard)
+	{
+		// TODO: define rules by which cards can be added
+		// default: the card is automatically added
+		this.cardList.push(addCard);
+		this.top = this.cardList[this.cardList.length];
 		
 		// return a success value
-	}
+		// default: automatic success
+		return true;
+	},
 	
-	// draw: pulls a Card from the Stack and moves it to another Stack (destination)
-	function draw()
+	// draw: removes a card from the stack and "moves" it to a new destination
+	draw: function()
 	{
-		// draw code
+		// TODO: error checking, elaboate moving mechanism
+		// default: just remove the card
+		this.cardList.pop();
 		
-		// return a success code (?)
-	}
+		// return a success value
+		// default: automatic success
+		return true;
+	},
 	
-	// onClick: what happens to the top Card when the Stack is clicked (overridable)
-	function onClick()
+	// onClick: what happens when the top of the Stack is clicked
+	onClick: function()
 	{
-		// something happens here
+		// TODO: something
 	}
-}
+});
+
 
 /* ********************
 	Hand
 		a specialized Stack of cards 
 		properties: sorted
 */
-function Hand()
-{
-	// ---- properties
-	// (inherit properties of Stack)
-	var sorted;		// boolean, whether or not the hand is sorted by some value
+var Hand = Stack.extend({
+	// init: creates an empty Hand
+	init: function() 
+	{
+		this._super();
+		this.cascade = "hand";	// special case to draw hand
+		this.sorted = false;
+	},
 	
-	// initialization
-	this.sorted = false;
+	// toggleSort: changes whether the Hand is sorted or not
+	toggleSort: function()
+	{
+		this.sorted = !this.sorted;
+		if (this.sorted)
+		{
+			this.sort();
+		}
+	},
 	
-	// ---- functions
-	// (inherit functions from Stack)
-	
-	
-}
+	// sort: sort the Hand by some value
+	sort: function()
+	{
+		// TODO: elaborate sort function
+		console.log("Hand is now sorted.");
+	}
+});
 
+// -------------------------------------------------------------
+	var pokerdeck;
+	pokerdeck = new Deck();
+	console.log(pokerdeck);
 
-function main ()
-{
-	/* this would be a test funtion to get something to run */
-	document.write("Hi");
-}
+	pokerdeck.shuffle();
+	
+	//stockPile = new Stack();
+	
+	myHand = new Hand();
+	//var movecard = pokerdeck.draw();
+	//myHand.add(pokerdeck.draw());
+	//myHand.add(movecard);
+	console.log(myHand);
+	
