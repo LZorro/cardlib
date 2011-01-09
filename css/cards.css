@@ -39,42 +39,60 @@ h1 {
   width: 66px;
   height: 100px;
   border: 1px solid #999999;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  -o-border-radius: 6px;
-  -ms-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  border-radius: 6px;
-  -moz-box-shadow: #999999 -1px 1px 8px;
-  -webkit-box-shadow: #999999 -1px 1px 8px;
-  -o-box-shadow: #999999 -1px 1px 8px;
-  box-shadow: #999999 -1px 1px 8px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+  -moz-box-shadow: #999999 -1px 1px 4px;
+  -webkit-box-shadow: #999999 -1px 1px 4px;
+  -o-box-shadow: #999999 -1px 1px 4px;
+  box-shadow: #999999 -1px 1px 4px;
   padding: 10px;
   margin: 10px;
+  background: white;
 }
-/* line 19, sass/cards.sass */
+/* line 20, sass/cards.sass */
+.card.face_down {
+  background: #eeeeee;
+}
+/* line 22, sass/cards.sass */
+.card.face_down > * {
+  display: none;
+}
+/* line 24, sass/cards.sass */
 .card .suit {
   position: absolute;
   color: #222222;
 }
 
-/* line 23, sass/cards.sass */
+/* line 29, sass/cards.sass */
+.card_holder.cascade {
+  position: relative;
+}
+/* line 31, sass/cards.sass */
+.card_holder.cascade .card {
+  position: absolute;
+}
+
+/* line 34, sass/cards.sass */
 .place {
   position: relative;
   display: inline-block;
   width: 66px;
   height: 100px;
   border: 1px solid #999999;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  -o-border-radius: 6px;
-  -ms-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  border-radius: 6px;
-  -moz-box-shadow: #999999 -1px 1px 8px;
-  -webkit-box-shadow: #999999 -1px 1px 8px;
-  -o-box-shadow: #999999 -1px 1px 8px;
-  box-shadow: #999999 -1px 1px 8px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+  -moz-box-shadow: #999999 -1px 1px 4px;
+  -webkit-box-shadow: #999999 -1px 1px 4px;
+  -o-box-shadow: #999999 -1px 1px 4px;
+  box-shadow: #999999 -1px 1px 4px;
   padding: 10px;
   margin: 10px;
   -moz-box-shadow: none;
