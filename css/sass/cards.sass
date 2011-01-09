@@ -1,6 +1,7 @@
 @import core
 
 $card_width: 66px
+$card_height: 100px
 
 h1
   font-weight: bold
@@ -9,7 +10,7 @@ h1
   position: relative
   display: inline-block
   width: $card_width
-  height: 100px
+  height: $card_height
   border: 1px solid #999
   +border-radius(8px)
   +box-shadow(#999, -1px, 1px, 4px)
@@ -27,6 +28,10 @@ h1
   .suit
     position: absolute
     color: #222
+  img
+    position: absolute
+    left: $card_width/2 - 8px
+    top: $card_height/2 - 20px
 
 .card_holder
   &.cascade
