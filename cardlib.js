@@ -38,8 +38,7 @@ var Card = Klass.extend({
 	// onClick: what happens to a card when it is clicked
 	onClick: function()
 	{
-		// testing by tapping the card
-		this.tap();
+		// TODO: something
 	}
 });
 
@@ -55,27 +54,39 @@ var Deck = Klass.extend({
 	// init: creates a standard 52-card poker deck
 	init: function()
 	{
-		this.card = new Array(52);
+		this.cardList = new Array(52);
 		for (i=1; i<14; i++) 
 		{
-			this.card[i-1] 		= new Card(i, "Clubs");
-			this.card[i-1+13] 	= new Card(i, "Diamonds");
-			this.card[i-1+26] 	= new Card(i, "Hearts");
-			this.card[i-1+39] 	= new Card(i, "Spades");
+			this.cardList[i-1] 		= new Card(i, "Clubs");
+			this.cardList[i-1+13] 	= new Card(i, "Diamonds");
+			this.cardList[i-1+26] 	= new Card(i, "Hearts");
+			this.cardList[i-1+39] 	= new Card(i, "Spades");
 		}
 	},
 	
 	// shuffle: randomizes the order of the cards in the deck
 	shuffle: function()
 	{
-		// TODO: elaborate randomization goes here
-		console.log("Deck is shuffled.");
+		// Uses the Fisher-Yates randomizing shuffle algoriithm
+		var i = this.cardList.length;
+		if (i == 0) 
+			return false;		// error catching: no sense in randomizing an empty deck
+		while (--i)
+		{
+			var j = Math.floor(Math.random() * (i+1));
+			var tempi = this.cardList[i];
+			var tempj = this.cardList[j];
+			this.cardList[i] = tempj;
+			this.cardList[j] = tempi;
+		}
+		//console.log("Deck is shuffled.");
 	},
 	
-	// draw: removes a card from the Deck and "moves" it to a new destination
+	// draw: removes a card from the Deck 
+	//		returns: The card that was removed
 	draw: function()
 	{
-		return this.card.pop();
+		return this.cardList.pop();
 		
 		// return a success value
 		//return true;
@@ -101,6 +112,7 @@ var Stack = Klass.extend({
 	
 	// add: adds a card to the Stack
 	//		addCard: the card attempting to be added to the Stack
+	//		returns: Boolean - whether the addition to the Stack was successful
 	add: function(addCard)
 	{
 		// TODO: define rules by which cards can be added
@@ -113,16 +125,17 @@ var Stack = Klass.extend({
 		return true;
 	},
 	
-	// draw: removes a card from the stack and "moves" it to a new destination
+	// draw: removes a card from the stack 
+	//		returns: the card that was removed from the Stack
 	draw: function()
 	{
 		// TODO: error checking, elaboate moving mechanism
 		// default: just remove the card
-		this.cardList.pop();
+		return this.cardList.pop();
 		
 		// return a success value
 		// default: automatic success
-		return true;
+		//return true;
 	},
 	
 	// onClick: what happens when the top of the Stack is clicked
@@ -142,41 +155,64 @@ var Hand = Stack.extend({
 	// init: creates an empty Hand
 	init: function() 
 	{
-		this._super();
-		this.cascade = "hand";	// special case to draw hand
-		this.sorted = false;
+		this._super();			// inherits the variables of the Stack class
+		this.cascade = "hand";	// special case when rendering the hand
+		this.sorted = false;	// toggle for keeing the hand sorted
 	},
 	
 	// toggleSort: changes whether the Hand is sorted or not
 	toggleSort: function()
 	{
 		this.sorted = !this.sorted;
+		// if the hand is now supposed to be sorted, sort it
 		if (this.sorted)
 		{
-			this.sort();
+			this.sortCards();
 		}
 	},
 	
-	// sort: sort the Hand by some value
-	sort: function()
+	// **** NOTE: this sort function might better serve in the "view" mode ****
+	// sortCards: sort the Hand by some value
+	sortCards: function()
 	{
-		// TODO: elaborate sort function
-		console.log("Hand is now sorted.");
+		// sorts first by suit, then rank in ascending order
+		this.cardList.sort(function(a, b) {
+			if (a.suit < b.suit)
+				return -1;
+			if (a.suit > b.suit)
+				return 1;
+			return (a.rank - b.rank);
+		});
+		// console.log("Hand is now sorted.");
 	}
 });
 
 // -------------------------------------------------------------
+	// initialize the deck
 	var pokerdeck;
 	pokerdeck = new Deck();
+	console.log("pokerdeck:");
 	console.log(pokerdeck);
 
 	pokerdeck.shuffle();
 	
-	//stockPile = new Stack();
+	// dump all deck cards into the stockpile
+	stockpile = new Stack();
+	for (i=0; i<52; i++)
+	{
+		stockpile.add(pokerdeck.draw());
+	}
+	console.log("stockpile:");
+	console.log(stockpile);
 	
+	// deal a number of cards from the stock into a hand
+	var handSize = 5;
 	myHand = new Hand();
-	//var movecard = pokerdeck.draw();
-	//myHand.add(pokerdeck.draw());
-	//myHand.add(movecard);
-	console.log(myHand);
+	for (i=0; i<handSize; i++)
+	{
+		myHand.add(stockpile.draw());
+		myHand.cardList[i].facedown = false;
+	}
+	console.log("myHand:");
+	console.log(myHand.cardList);
 	
