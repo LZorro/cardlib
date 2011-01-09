@@ -102,12 +102,12 @@ h1 {
 /* line 52, sass/cards.sass */
 #foundations_area {
   float: left;
-  margin-left: 115px;
+  margin-left: 150px;
 }
 /* line 53, sass/cards.sass */
 #foundations_area .card_holder {
-  height: 140px;
-  width: 106px;
+  height: 130px;
+  width: 96px;
   background: #fafafa;
   border: 1px solid #cccccc;
   margin: 0px 20px;
