@@ -52,33 +52,34 @@ h1 {
   padding: 10px;
   margin: 10px;
   background: white;
+  cursor: pointer;
 }
-/* line 22, sass/cards.sass */
+/* line 23, sass/cards.sass */
 .card.face_down {
   background: #eeeeee;
 }
-/* line 24, sass/cards.sass */
+/* line 25, sass/cards.sass */
 .card.face_down > * {
   display: none;
 }
-/* line 26, sass/cards.sass */
+/* line 27, sass/cards.sass */
 .card .suit {
   position: absolute;
   color: #222222;
 }
 
-/* line 31, sass/cards.sass */
+/* line 32, sass/cards.sass */
 .card_holder.cascade {
   width: 116px;
   display: inline-block;
   position: relative;
 }
-/* line 35, sass/cards.sass */
+/* line 36, sass/cards.sass */
 .card_holder.cascade .card {
   position: absolute;
 }
 
-/* line 38, sass/cards.sass */
+/* line 39, sass/cards.sass */
 .place {
   position: relative;
   display: inline-block;
