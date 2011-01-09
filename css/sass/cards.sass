@@ -1,12 +1,14 @@
 @import core
 
+$card_width: 66px
+
 h1
   font-weight: bold
 
 =card
   position: relative
   display: inline-block
-  width: 66px
+  width: $card_width
   height: 100px
   border: 1px solid #999
   +border-radius(8px)
@@ -27,6 +29,8 @@ h1
 
 .card_holder
   &.cascade
+    width: $card_width + 50px
+    display: inline-block
     position: relative
     .card
       position: absolute
