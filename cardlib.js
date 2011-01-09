@@ -81,10 +81,11 @@ var Stack = Klass.extend({
 	// add: adds a card to the Stack
 	//		addCard: the card attempting to be added to the Stack
 	//		returns: Boolean - whether the addition to the Stack was successful
-	add: function(addCard)
+	//    force:   Boolean - whether to 'force' the add (ignore rules)
+	add: function(addCard, force)
 	{
 		// determine if the card can be added to the stack
-		var canBeAdded = this.stack_rules(addCard);
+		var canBeAdded = force || this.stack_rules(addCard);
 		if (canBeAdded)
 		{
 			// if so, push to the stack and update the top pointer
