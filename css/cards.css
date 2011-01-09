@@ -95,17 +95,21 @@ h1 {
 #deck_area {
   float: left;
 }
-/* line 49, sass/cards.sass */
+/* line 50, sass/cards.sass */
 #deck_area .card_holder {
   height: 160px;
 }
+/* line 52, sass/cards.sass */
+#deck_area .card_holder .card {
+  position: absolute;
+}
 
-/* line 53, sass/cards.sass */
+/* line 55, sass/cards.sass */
 #foundations_area {
   float: left;
   margin-left: 150px;
 }
-/* line 54, sass/cards.sass */
+/* line 56, sass/cards.sass */
 #foundations_area .card_holder {
   height: 130px;
   width: 96px;
@@ -115,7 +119,7 @@ h1 {
   display: inline-block;
 }
 
-/* line 64, sass/cards.sass */
+/* line 66, sass/cards.sass */
 .place {
   position: relative;
   display: inline-block;
@@ -140,12 +144,12 @@ h1 {
   box-shadow: none;
 }
 
-/* line 68, sass/cards.sass */
+/* line 70, sass/cards.sass */
 body {
   position: relative;
 }
 
-/* line 71, sass/cards.sass */
+/* line 73, sass/cards.sass */
 .ui-droppable {
   z-index: 100;
 }
