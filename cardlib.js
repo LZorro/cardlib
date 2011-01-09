@@ -109,6 +109,12 @@ var Stack = Klass.extend({
 		// default: automatic success
 		//return true;
 	},
+
+  drawCards: function(num, callback) {
+    for (i = 0; i < num; i++) {
+      callback(this.cardList.pop());
+    }
+  },
 	
 	// onClick: what happens when the top of the Stack is clicked
 	onClick: function()
