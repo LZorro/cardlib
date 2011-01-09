@@ -34,12 +34,21 @@ var Card = Klass.extend({
 	{
 		this.tapped = !this.tapped;
 	},
-	
-	// onClick: what happens to a card when it is clicked
-	onClick: function()
-	{
-		// TODO: something
-	}
+
+  logicalRank: function() {
+    switch(this.rank) {
+      case 11:
+        return 'J';
+      case 12:
+        return 'Q';
+      case 13:
+        return 'K';
+      case 1:
+        return 'A';
+      default:
+        return this.rank.toString();
+    }
+  }
 });
 
 /* ********************
