@@ -122,7 +122,6 @@ var Stack = Klass.extend({
 		an array of Cards
 		properties: size
 		functions:
-			create (default: a standard 52-card poker deck)
 			shuffle
 */
 var Deck = Stack.extend({
@@ -164,22 +163,23 @@ var Deck = Stack.extend({
 /* ********************
 	Hand
 		a specialized Stack of cards 
-		properties: sorted
+		properties: sorted, handLimit
 */
 var Hand = Stack.extend({
 	// init: creates an empty Hand
 	init: function() 
 	{
-		this._super();			// inherits the variables of the Stack class
-		this.cascade = "hand";	// special case when rendering the hand
-		this.sorted = false;	// toggle for keeing the hand sorted
+		this._super();				// inherits the variables of the Stack class
+		this.cascade 	= "hand";	// special case when rendering the hand
+		this.sorted 	= false;	// toggle for keeing the hand sorted
+		this.handLimit 	= 7;		// arbitrary hand limit
 	},
 	
 	// inherit default stack_rules
 	stack_rules: function(addCard) {
 		//return this._super(addCard);
-		// keep the red cards
-		if (addCard.suit == "Clubs" || addCard.suit == "Spades")
+		// Cannot add more cards to the hand if you are at the hand limit
+		if (this.cardList.length >= this.handLimit)
 			return false;
 		else
 			return true;
@@ -242,8 +242,8 @@ function deal(source, destination)
 	// initialize the deck
 	var pokerdeck;
 	pokerdeck = new Deck();
-	console.log("pokerdeck:");
-	console.log(pokerdeck);
+	//console.log("pokerdeck:");
+	//console.log(pokerdeck);
 
 	pokerdeck.shuffle();
 	
@@ -253,12 +253,12 @@ function deal(source, destination)
 	{
 		stockpile.add(pokerdeck.draw());
 	}
-	console.log("stockpile:");
-	console.log(stockpile);
+	//console.log("stockpile:");
+	//console.log(stockpile);
 	
 	tableau = new Stack();
-	console.log("tableau:");
-	console.log(tableau.cardList);
+	//console.log("tableau:");
+	//console.log(tableau.cardList);
 	
 	// deal a number of cards from the stock into a hand
 	var handSize = 5;
@@ -278,8 +278,8 @@ function deal(source, destination)
 		//myHand.add(stockpile.draw());
 		//myHand.cardList[i].facedown = false;
 	}
-	console.log("myHand:");
-	console.log(myHand.cardList);
+	//console.log("myHand:");
+	//console.log(myHand.cardList);
 	
 	
 	// the ultimate test
@@ -287,6 +287,6 @@ function deal(source, destination)
 	// this will fail because the tableau has black cards, and myHand will only accept red cards
 	var tryDeal;
 	tryDeal = deal(tableau, myHand);
-	console.log("tryDeal:");
-	console.log(tryDeal);
+	//console.log("tryDeal:");
+	//console.log(tryDeal);
 	
