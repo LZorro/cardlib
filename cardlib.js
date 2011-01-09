@@ -52,57 +52,6 @@ var Card = Klass.extend({
 });
 
 /* ********************
-	Deck
-		an array of Cards
-		properties: size
-		functions:
-			create (default: a standard 52-card poker deck)
-			shuffle
-*/
-var Deck = Klass.extend({
-	// init: creates a standard 52-card poker deck
-	init: function()
-	{
-		this.cardList = new Array(52);
-		for (i=1; i<14; i++) 
-		{
-			this.cardList[i-1] 		= new Card(i, "Clubs");
-			this.cardList[i-1+13] 	= new Card(i, "Diamonds");
-			this.cardList[i-1+26] 	= new Card(i, "Hearts");
-			this.cardList[i-1+39] 	= new Card(i, "Spades");
-		}
-	},
-	
-	// shuffle: randomizes the order of the cards in the deck
-	shuffle: function()
-	{
-		// Uses the Fisher-Yates randomizing shuffle algoriithm
-		var i = this.cardList.length;
-		if (i == 0) 
-			return false;		// error catching: no sense in randomizing an empty deck
-		while (--i)
-		{
-			var j = Math.floor(Math.random() * (i+1));
-			var tempi = this.cardList[i];
-			var tempj = this.cardList[j];
-			this.cardList[i] = tempj;
-			this.cardList[j] = tempi;
-		}
-		//console.log("Deck is shuffled.");
-	},
-	
-	// draw: removes a card from the Deck 
-	//		returns: The card that was removed
-	draw: function()
-	{
-		return this.cardList.pop();
-		
-		// return a success value
-		//return true;
-	},
-});
-
-/* ********************
 	Stack
 		a stack of cards
 		typical uses: stock (draw pile), discard (waste/graveyard), foundation
@@ -165,6 +114,49 @@ var Stack = Klass.extend({
 	onClick: function()
 	{
 		// TODO: something
+	}
+});
+
+/* ********************
+	Deck
+		an array of Cards
+		properties: size
+		functions:
+			create (default: a standard 52-card poker deck)
+			shuffle
+*/
+var Deck = Stack.extend({
+	// init: creates a standard 52-card poker deck
+	init: function()
+	{
+	  this._super();
+
+		this.cardList = new Array(52);
+		for (i=1; i<14; i++) 
+		{
+			this.cardList[i-1] 		= new Card(i, "Clubs");
+			this.cardList[i-1+13] 	= new Card(i, "Diamonds");
+			this.cardList[i-1+26] 	= new Card(i, "Hearts");
+			this.cardList[i-1+39] 	= new Card(i, "Spades");
+		}
+	},
+	
+	// shuffle: randomizes the order of the cards in the deck
+	shuffle: function()
+	{
+		// Uses the Fisher-Yates randomizing shuffle algoriithm
+		var i = this.cardList.length;
+		if (i == 0) 
+			return false;		// error catching: no sense in randomizing an empty deck
+		while (--i)
+		{
+			var j = Math.floor(Math.random() * (i+1));
+			var tempi = this.cardList[i];
+			var tempj = this.cardList[j];
+			this.cardList[i] = tempj;
+			this.cardList[j] = tempi;
+		}
+		//console.log("Deck is shuffled.");
 	}
 });
 
