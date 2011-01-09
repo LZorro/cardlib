@@ -41,14 +41,24 @@ h1
     .card
       position: absolute
 
+#stacks_area
+  clear: both
+
 #deck_area
   .card_holder
     height: 160px
+  float: left
 
 #foundations_area
   .card_holder
-    height: 160px
+    height: $card_height + 40px
+    width: $card_width + 40px
+    background: #FAFAFA
+    border: 1px solid #CCC
+    margin: 0px 20px
     display: inline-block
+  float: left
+  margin-left: 115px
 
 .place
   +card
