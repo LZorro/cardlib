@@ -119,19 +119,33 @@ var Stack = Klass.extend({
 		this.cascade 	= "none";
 	},
 	
+	// stack_rules: defines whether or not the specified card can be added to the stack
+	// 		returns: true if the card can be added, false if not
+	stack_rules: function(addCard)
+	{
+		// default: always add the card, so always true
+		return true;
+	},	
+	
 	// add: adds a card to the Stack
 	//		addCard: the card attempting to be added to the Stack
 	//		returns: Boolean - whether the addition to the Stack was successful
 	add: function(addCard)
 	{
-		// TODO: define rules by which cards can be added
-		// default: the card is automatically added
-		this.cardList.push(addCard);
-		this.top = this.cardList[this.cardList.length];
-		
-		// return a success value
-		// default: automatic success
-		return true;
+		// determine if the card can be added to the stack
+		var canBeAdded = this.stack_rules(addCard);
+		if (canBeAdded)
+		{
+			// if so, push to the stack and update the top pointer
+			this.cardList.push(addCard);
+			this.top = this.cardList[this.cardList.length];
+			return true;
+		}
+		else
+		{
+			// card cannot be added, add failed
+			return false;
+		}		
 	},
 	
 	// draw: removes a card from the stack 
@@ -169,6 +183,16 @@ var Hand = Stack.extend({
 		this.sorted = false;	// toggle for keeing the hand sorted
 	},
 	
+	// inherit default stack_rules
+	stack_rules: function(addCard) {
+		//return this._super(addCard);
+		// keep the red cards
+		if (addCard.suit == "Clubs" || addCard.suit == "Spades")
+			return false;
+		else
+			return true;
+	},
+	
 	// toggleSort: changes whether the Hand is sorted or not
 	toggleSort: function()
 	{
@@ -196,7 +220,33 @@ var Hand = Stack.extend({
 	}
 });
 
+/* ********************
+	deal: Moves a Card from one Stack to another
+		if the card cannot be placed in the destination, it returns to the source
+		source: where it pulls the topmost Card from
+		destination: which Stack it tries to add the Card to
+		returns: true if successful, false otherwise
+*/
+function deal(source, destination)
+{
+	var targetCard;
+	targetCard = source.draw();
+	
+	if (destination.add(targetCard))
+		return true;
+	else
+	{
+		// "cancel" the movement - the card has to be put directly back to irs original place
+		source.cardList.push(targetCard);
+		return false;
+	}
+};
+
 // -------------------------------------------------------------
+// 			IGNORE ME!   IGNORE ME!
+//			these is code to test that the above functions work
+// -------------------------------------------------------------
+
 	// initialize the deck
 	var pokerdeck;
 	pokerdeck = new Deck();
@@ -214,14 +264,37 @@ var Hand = Stack.extend({
 	console.log("stockpile:");
 	console.log(stockpile);
 	
+	tableau = new Stack();
+	console.log("tableau:");
+	console.log(tableau.cardList);
+	
 	// deal a number of cards from the stock into a hand
 	var handSize = 5;
 	myHand = new Hand();
+	var movecard;
 	for (i=0; i<handSize; i++)
 	{
-		myHand.add(stockpile.draw());
-		myHand.cardList[i].facedown = false;
+		// pulling the card from the stock...
+		movecard = stockpile.draw();
+		// if it has been sucessfully added...
+		if (myHand.add(movecard))
+			// turn it face up in the Hand
+			myHand.cardList[myHand.cardList.length-1].facedown = false;
+		else
+			// otherwise, it can't go there, and it's added to the tableau
+			tableau.add(movecard);
+		//myHand.add(stockpile.draw());
+		//myHand.cardList[i].facedown = false;
 	}
 	console.log("myHand:");
 	console.log(myHand.cardList);
+	
+	
+	// the ultimate test
+	// try to "deal" a card from the tableau to myHand
+	// this will fail because the tableau has black cards, and myHand will only accept red cards
+	var tryDeal;
+	tryDeal = deal(tableau, myHand);
+	console.log("tryDeal:");
+	console.log(tryDeal);
 	
