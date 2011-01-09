@@ -87,9 +87,10 @@ h1 {
 /* line 44, sass/cards.sass */
 #foundations_area .card_holder {
   height: 160px;
+  display: inline-block;
 }
 
-/* line 47, sass/cards.sass */
+/* line 48, sass/cards.sass */
 .place {
   position: relative;
   display: inline-block;
