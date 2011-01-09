@@ -87,7 +87,7 @@ var Stack = Klass.extend({
 		{
 			// if so, push to the stack and update the top pointer
 			this.cardList.push(addCard);
-			this.top = this.cardList[this.cardList.length];
+			this.top = this.cardList[this.cardList.length-1];
 			return true;
 		}
 		else
