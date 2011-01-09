@@ -67,6 +67,7 @@ var Stack = Klass.extend({
 
 		this.cardList = new Array();
 		this.cascade 	= this.options.cascade;
+		this.top		= null;
 	},
 	
 	// stack_rules: defines whether or not the specified card can be added to the stack
