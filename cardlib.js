@@ -60,12 +60,13 @@ var Card = Klass.extend({
 */
 var Stack = Klass.extend({
 	// init: creates an empty stack
-	init: function()
-	{
-		this.cardList 	= new Array();
-		//this.top 		= this.cardlist[0];
-		//this.bottom 	= this.cardlist[0];
-		this.cascade 	= "none";
+	init: function(opts) {
+	  this.options = $.extend({
+	    cascade: 'none'
+	  }, opts || {});
+
+		this.cardList = new Array();
+		this.cascade 	= this.options.cascade;
 	},
 	
 	// stack_rules: defines whether or not the specified card can be added to the stack
