@@ -79,7 +79,17 @@ h1 {
   position: absolute;
 }
 
-/* line 39, sass/cards.sass */
+/* line 40, sass/cards.sass */
+#deck_area .card_holder {
+  height: 160px;
+}
+
+/* line 44, sass/cards.sass */
+#foundations_area .card_holder {
+  height: 160px;
+}
+
+/* line 47, sass/cards.sass */
 .place {
   position: relative;
   display: inline-block;
