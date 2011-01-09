@@ -32,19 +32,19 @@ h1 {
   font-weight: bold;
 }
 
-/* line 6, sass/cards.sass */
+/* line 17, sass/cards.sass */
 .card {
   position: relative;
   display: inline-block;
-  width: 100px;
-  height: 140px;
+  width: 66px;
+  height: 100px;
   border: 1px solid #999999;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -o-border-radius: 8px;
-  -ms-border-radius: 8px;
-  -khtml-border-radius: 8px;
-  border-radius: 8px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -o-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  border-radius: 6px;
   -moz-box-shadow: #999999 -1px 1px 8px;
   -webkit-box-shadow: #999999 -1px 1px 8px;
   -o-box-shadow: #999999 -1px 1px 8px;
@@ -52,8 +52,33 @@ h1 {
   padding: 10px;
   margin: 10px;
 }
-/* line 16, sass/cards.sass */
+/* line 19, sass/cards.sass */
 .card .suit {
   position: absolute;
   color: #222222;
+}
+
+/* line 23, sass/cards.sass */
+.place {
+  position: relative;
+  display: inline-block;
+  width: 66px;
+  height: 100px;
+  border: 1px solid #999999;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -o-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  border-radius: 6px;
+  -moz-box-shadow: #999999 -1px 1px 8px;
+  -webkit-box-shadow: #999999 -1px 1px 8px;
+  -o-box-shadow: #999999 -1px 1px 8px;
+  box-shadow: #999999 -1px 1px 8px;
+  padding: 10px;
+  margin: 10px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  -o-box-shadow: none;
+  box-shadow: none;
 }
